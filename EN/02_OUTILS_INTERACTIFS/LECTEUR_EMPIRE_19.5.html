@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMPIRE 19.5 | Visualiseur Expert</title>
+    <title>EMPIRE 19.5 | Expert Viewer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
@@ -32,7 +32,7 @@
     <div id="sidebar">
         <div class="sidebar-header">
             <h5 class="fw-bold mb-0"><i class="bi bi-shield-lock-fill text-warning"></i> EMPIRE 19.5</h5>
-            <small class="text-muted">Système de Formation Expert</small>
+            <small class="text-muted">Expert Training System</small>
         </div>
         <div id="nav-tree"></div>
         <div class="api-config">
@@ -45,8 +45,8 @@
         <div id="render-area" class="container markdown-body" style="max-width: 900px;">
             <div class="text-center mt-5">
                 <i class="bi bi-book text-info display-1 mb-4"></i>
-                <h1>Chargement Prêt</h1>
-                <p class="lead text-muted">Sélectionnez un module dans la barre latérale pour commencer votre révision.</p>
+                <h1>Ready to Load</h1>
+                <p class="lead text-muted">Select a module in the sidebar to start your revision.</p>
             </div>
         </div>
     </div>
@@ -54,23 +54,23 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script>
-        // CONFIGURATION DES CHEMINS (MAJ 20/04/2026)
-        const BASE_PATH = "/FR/01_FORMATION_INTENSIVE_14_JOURS";
+        // PATH CONFIGURATION (MAJ 20/04/2026)
+        const BASE_PATH = "/EN/01_INTENSIVE_TRAINING_14_DAYS";
         
         const SPRINT = [
-            { day: "J01", folder: "Jour_01_Setup_Theorie", files: ["Seance_Jour_01.md"] },
-            { day: "J02", folder: "Jour_02_SQL_Creation", files: ["Cours_Detaille_Creation_SQL.md", "Template_Creation_SQL.sql"] },
-            { day: "J03", folder: "Jour_03_SQL_Requetes", files: ["Cours_Detaille_Requetes_SQL.md", "Template_Requetes_SQL.sql"] },
-            { day: "J04", folder: "Jour_04_Web_Interface", files: ["Cours_Detaille_Web_Bootstrap.md", "Structure_Marketplace.php"] },
-            { day: "J05", folder: "Jour_05_Web_PHP", files: ["Cours_Detaille_Web_PHP.md", "Formulaire_PHP.php"] },
-            { day: "J06", folder: "Jour_06_Web_JS", files: ["Cours_Detaille_Web_JS.md", "Panier_LocalStorage.js"] },
-            { day: "J08", folder: "Jour_08_UML_Cas_Sequence", files: ["Cours_Detaille_UML_Cas_Sequence.md", "Diagrammes_Cas_Sequence.puml"] },
-            { day: "J09", folder: "Jour_09_UML_Classes", files: ["Cours_Detaille_UML.md", "Diagramme_Classes.puml"] },
-            { day: "J10", folder: "Jour_10_JAVA_Bases", files: ["Cours_Detaille_Java_Encapsulation.md", "Account.java", "Account_Basic.java"] },
-            { day: "J11", folder: "Jour_11_JAVA_Methodes", files: ["Cours_Detaille_JAVA.md", "Article.java", "Article_Advanced.java"] },
-            { day: "J12", folder: "Jour_12_Examen_Blanc_1", files: ["Correction_Examen_1.md", "Resolution_Sujet_1_Aerien_Maillots.md"] },
-            { day: "J13", folder: "Jour_13_Examen_Blanc_2", files: ["Correction_Examen_2.md", "Resolution_Sujet_2_Fournitures_Banque.md"] },
-            { day: "J14", folder: "Jour_14_Optimisation", files: ["Hacks_Productivite.md"] }
+            { day: "D01", folder: "Jour_01_Setup_Theorie", files: ["Seance_Jour_01.md"] },
+            { day: "D02", folder: "Jour_02_SQL_Creation", files: ["Cours_Detaille_Creation_SQL.md", "Template_Creation_SQL.sql"] },
+            { day: "D03", folder: "Jour_03_SQL_Requetes", files: ["Cours_Detaille_Requetes_SQL.md", "Template_Requetes_SQL.sql"] },
+            { day: "D04", folder: "Jour_04_Web_Interface", files: ["Cours_Detaille_Web_Bootstrap.md", "Structure_Marketplace.php"] },
+            { day: "D05", folder: "Jour_05_Web_PHP", files: ["Cours_Detaille_Web_PHP.md", "Formulaire_PHP.php"] },
+            { day: "D06", folder: "Jour_06_Web_JS", files: ["Cours_Detaille_Web_JS.md", "Panier_LocalStorage.js"] },
+            { day: "D08", folder: "Jour_08_UML_Cas_Sequence", files: ["Cours_Detaille_UML_Cas_Sequence.md", "Diagrammes_Cas_Sequence.puml"] },
+            { day: "D09", folder: "Jour_09_UML_Classes", files: ["Cours_Detaille_UML.md", "Diagramme_Classes.puml"] },
+            { day: "D10", folder: "Jour_10_JAVA_Bases", files: ["Cours_Detaille_Java_Encapsulation.md", "Account.java", "Account_Basic.java"] },
+            { day: "D11", folder: "Jour_11_JAVA_Methodes", files: ["Cours_Detaille_JAVA.md", "Article.java", "Article_Advanced.java"] },
+            { day: "D12", folder: "Jour_12_Examen_Blanc_1", files: ["Correction_Examen_1.md", "Resolution_Sujet_1_Aerien_Maillots.md"] },
+            { day: "D13", folder: "Jour_13_Examen_Blanc_2", files: ["Correction_Examen_2.md", "Resolution_Sujet_2_Fournitures_Banque.md"] },
+            { day: "D14", folder: "Jour_14_Optimisation", files: ["Hacks_Productivite.md"] }
         ];
 
         function textToHex(str) {
@@ -96,7 +96,7 @@
             const area = document.getElementById('render-area');
             try {
                 const res = await fetch(path);
-                if (!res.ok) throw new Error("Fichier introuvable");
+                if (!res.ok) throw new Error("File not found");
                 let content = await res.text();
                 const umlBlocks = content.match(/@startuml[\s\S]*?@enduml/g) || [];
 
@@ -104,18 +104,18 @@
                     let html = marked.parse(content);
                     umlBlocks.forEach(block => {
                         const url = getUmlUrl(block);
-                        html = html.replace(block, `<div class="uml-container"><img src="${url}" alt="Schéma UML"></div>`);
+                        html = html.replace(block, `<div class="uml-container"><img src="${url}" alt="UML Diagram"></div>`);
                     });
                     area.innerHTML = html;
                 } else {
                     let diagramPreviews = "";
                     umlBlocks.forEach(block => {
                         const url = getUmlUrl(block);
-                        diagramPreviews += `<div class="uml-container"><h5>Compilation Visuelle</h5><img src="${url}"></div>`;
+                        diagramPreviews += `<div class="uml-container"><h5>Visual Compilation</h5><img src="${url}"></div>`;
                     });
-                    area.innerHTML = `<h1>Code Source</h1><p class="text-muted"><code>${path}</code></p>${diagramPreviews}<pre><code>${content.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</code></pre>`;
+                    area.innerHTML = `<h1>Source Code</h1><p class="text-muted"><code>${path}</code></p>${diagramPreviews}<pre><code>${content.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</code></pre>`;
                 }
-            } catch (e) { area.innerHTML = `<div class="alert alert-danger">Erreur : ${e.message}</div>`; }
+            } catch (e) { area.innerHTML = `<div class="alert alert-danger">Error: ${e.message}</div>`; }
             document.getElementById('loader').style.display = 'none';
             document.getElementById('content-wrapper').scrollTop = 0;
         }
