@@ -1,0 +1,16 @@
+version: '3'
+services:
+  plantuml-server:
+    image: plantuml/plantuml-server:jetty
+    container_name: plantuml-server
+    ports:
+      - "8085:8080" # On mappe le port 8085 du VPS vers le 8080 interne du container
+    restart: always
+    environment:
+      - PLANTUML_LIMIT_SIZE=8192
+    networks:
+      - plantuml-net
+
+networks:
+  plantuml-net:
+    driver: bridge

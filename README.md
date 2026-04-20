@@ -7,6 +7,17 @@ This repository is a world-class engineering resource designed to guarantee a **
 
 ---
 
+## 🚀 QUICK START (ONE-CLICK LAUNCH)
+
+To start your learning journey immediately:
+1.  **Download/Clone** this repository.
+2.  **Double-click** on the file **`LAUNCHER_EMPIRE.bat`** at the root of the folder.
+3.  The platform will automatically open in your browser at `http://localhost:3000`.
+
+*Note: Requires Node.js installed on your computer.*
+
+---
+
 ## 🌐 CHOOSE YOUR LANGUAGE / CHOISISSEZ VOTRE LANGUE
 
 ### 🇫🇷 [VERSION FRANÇAISE (FR)](./FR/README.md)
@@ -36,22 +47,6 @@ We don't teach "school code". We teach **Production Code**:
 - Smart Duplicate handling (`INSERT` vs `UPDATE`).
 - Professional Bootstrap 5 UI/UX for all admin panels.
 
-### 3. **Bilingual Academic Rigor**
-Every technical term (Inheritance, Polymorphism, Joins) is explained with academic precision in both languages to satisfy any exam board worldwide.
-
 ---
-
-## 📂 DIRECTORY STRUCTURE
-```text
-├── FR/                     # 🇫🇷 Original French Ecosystem
-│   ├── 01_FORMATION_INTENSIVE/
-│   ├── 04_ARSENAL_CRUD/
-│   └── 05_FICHES_REVISION/
-│
-└── EN/                     # 🇬🇧 Mirrored English Ecosystem
-    ├── 01_INTENSIVE_TRAINING/
-    ├── 04_CRUD_ARSENAL/
-    └── 05_REVISION_SHEETS/
-```
 
 *This project is provided for free to elevate the standards of computer science education. Go for the 19.5!* 🏰🚀
