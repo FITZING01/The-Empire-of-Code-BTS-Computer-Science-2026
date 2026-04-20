@@ -23,6 +23,7 @@
         .uml-container img { max-width: 100%; height: auto; }
         .api-config { padding: 1rem; border-top: 1px solid #334155; background: #0f172a; }
         #loader { display: none; position: fixed; top: 20px; right: 20px; z-index: 9999; }
+        code { font-family: 'Fira Code', monospace; }
     </style>
 </head>
 <body>
@@ -54,7 +55,6 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script>
-        // PATH CONFIGURATION (MAJ 20/04/2026)
         const BASE_PATH = "/EN/01_INTENSIVE_TRAINING_14_DAYS";
         
         const SPRINT = [
@@ -83,12 +83,10 @@
 
         function getUmlUrl(puml) {
             const apiBase = document.getElementById('api-url').value.trim().replace(/\/$/, '');
-            try {
-                puml = puml.trim();
-                if (!puml.startsWith("@startuml")) puml = "@startuml\n" + puml + "\n@enduml";
-                const hex = textToHex(puml);
-                return `${apiBase}/svg/~h${hex}`;
-            } catch (e) { return ""; }
+            puml = puml.trim();
+            if (!puml.startsWith("@startuml")) puml = "@startuml\n" + puml + "\n@enduml";
+            const hex = textToHex(puml);
+            return `${apiBase}/svg/~h${hex}`;
         }
 
         async function loadFile(path) {
@@ -98,29 +96,26 @@
                 const res = await fetch(path);
                 if (!res.ok) throw new Error("File not found");
                 let content = await res.text();
-                const umlBlocks = content.match(/@startuml[\s\S]*?@enduml/g) || [];
 
                 if (path.endsWith('.md')) {
-                    let html = marked.parse(content);
-                    umlBlocks.forEach(block => {
-                        const url = getUmlUrl(block);
-                        html = html.replace(block, `<div class="uml-container"><img src="${url}" alt="UML Diagram"></div>`);
+                    const umlRegex = /@startuml[\s\S]*?@enduml/g;
+                    const finalContent = content.replace(umlRegex, (match) => {
+                        return `<div class="uml-container"><img src="${getUmlUrl(match)}" alt="UML Diagram"></div>`;
                     });
-                    area.innerHTML = html;
+                    area.innerHTML = marked.parse(finalContent);
                 } else {
-                    let diagramPreviews = "";
-                    umlBlocks.forEach(block => {
-                        const url = getUmlUrl(block);
-                        diagramPreviews += `<div class="uml-container"><h5>Visual Compilation</h5><img src="${url}"></div>`;
-                    });
-                    area.innerHTML = `<h1>Source Code</h1><p class="text-muted"><code>${path}</code></p>${diagramPreviews}<pre><code>${content.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</code></pre>`;
+                    let preview = "";
+                    if (path.endsWith('.puml') || content.includes("@startuml")) {
+                        preview = `<div class="uml-container"><h5>Automatic Render</h5><img src="${getUmlUrl(content)}"></div>`;
+                    }
+                    area.innerHTML = `<h1>File</h1><code>${path}</code>${preview}<pre><code>${content.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</code></pre>`;
                 }
             } catch (e) { area.innerHTML = `<div class="alert alert-danger">Error: ${e.message}</div>`; }
             document.getElementById('loader').style.display = 'none';
             document.getElementById('content-wrapper').scrollTop = 0;
         }
 
-        // Init Sidebar
+        // Sidebar
         const tree = document.getElementById('nav-tree');
         SPRINT.forEach(day => {
             const h = document.createElement('div'); h.className = 'day-header'; h.innerText = day.day; tree.appendChild(h);
