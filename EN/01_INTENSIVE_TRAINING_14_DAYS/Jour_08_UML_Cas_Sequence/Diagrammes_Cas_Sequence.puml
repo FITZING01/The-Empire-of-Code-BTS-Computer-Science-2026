@@ -1,0 +1,73 @@
+@startuml
+title Use Case & Sequence Diagrams - Sprint 19.5 (BTS 2025 Syllabus)
+
+' ==========================================
+' USE CASE DIAGRAM: CND
+' ==========================================
+package "Use Case: CND Bank" {
+    actor "Client (CND)" as CND
+    actor "Bank Employee" as Emp
+    
+    usecase "Open an account" as UC_Open
+    usecase "Request an opening bonus" as UC_Bonus
+    usecase "Manage Foreign Currencies" as UC_Currencies
+    
+    ' Actors linked to main case
+    CND --> UC_Open
+    Emp --> UC_Open
+    
+    ' Required conditional extensions
+    UC_Bonus .> UC_Open : <<extend>>
+    UC_Currencies .> UC_Open : <<extend>>
+}
+
+' ==========================================
+' SEQUENCE DIAGRAM 1: Aviation
+' ==========================================
+package "Sequence: Buy Ticket" {
+    actor Traveler
+    participant "Reservation System" as SysRes
+    participant "Banking Gateway" as Bank
+    
+    Traveler -> SysRes : searchFlight(departure, arrival, date)
+    activate SysRes
+    SysRes --> Traveler : availableFlightsList
+    deactivate SysRes
+    
+    Traveler -> SysRes : selectFlight(flightId)
+    activate SysRes
+    SysRes --> Traveler : requestPayment(amount)
+    
+    Traveler -> SysRes : makePayment(cardInfo)
+    SysRes -> Bank : validateTransaction(amount, cardInfo)
+    activate Bank
+    Bank --> SysRes : transactionOK
+    deactivate Bank
+    
+    SysRes --> Traveler : ticketConfirmation(ticketNum)
+    deactivate SysRes
+}
+
+' ==========================================
+' SEQUENCE DIAGRAM 2: Aviation / HR
+' ==========================================
+package "Sequence: Pilot License Tracking" {
+    actor Pilot
+    participant "HR System" as HR
+    
+    Pilot -> HR : consultLicenseStatus()
+    activate HR
+    HR --> Pilot : displayDetails(expirationDate, validity)
+    deactivate HR
+    
+    alt License near expiration
+        Pilot -> HR : requestRenewal()
+        activate HR
+        HR --> Pilot : renewalFormProvided
+        deactivate HR
+    else Valid license
+        HR --> Pilot : noActionRequired
+    end
+}
+
+@enduml

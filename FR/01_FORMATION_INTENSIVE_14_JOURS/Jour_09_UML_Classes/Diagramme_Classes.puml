@@ -1,0 +1,58 @@
+@startuml
+title Diagramme de Classes : Bibliothèque en Ligne (Sprint 19.5)
+
+' ==========================================
+' DÉFINITION DES CLASSES
+' ==========================================
+
+class Abonné {
+    - numAbo : int
+    - nom : String
+    - prenom : String
+    - dateAdhesion : Date
+    + sInscrire()
+    + emprunterLivre(livre: Livre)
+    + payerAmende(montant: double)
+}
+
+class Livre {
+    - isbn : String
+    - titre : String
+    - auteur : String
+    - anneePub : int
+    - estDisponible : boolean
+    + verifierDispo() : boolean
+    + marquerIndisponible()
+}
+
+class Emprunt {
+    - idEmprunt : int
+    - dateEmprunt : Date
+    - dateRetourPrevue : Date
+    - dateRetourEffective : Date
+    - retard : boolean
+    + calculerAmende() : double
+}
+
+class Amende {
+    - idAmende : int
+    - montant : double
+    - estPayee : boolean
+    - motif : String
+    + regler()
+}
+
+' ==========================================
+' RELATIONS ET CARDINALITÉS
+' ==========================================
+
+Abonné "1" -- "*" Emprunt : effectue >
+Livre "1" -- "*" Emprunt : concerne >
+Emprunt "1" -- "0..1" Amende : génère >
+
+note right of Emprunt
+  Une amende est générée uniquement
+  si dateRetourEffective > dateRetourPrevue
+end note
+
+@enduml

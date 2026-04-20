@@ -1,0 +1,73 @@
+@startuml
+title Diagrammes Use Case & Séquence - Sprint 19.5 (Syllabus BTS 2025)
+
+' ==========================================
+' DIAGRAMME DE CAS D'UTILISATION : CND
+' ==========================================
+package "Cas d'Utilisation : Banque CND" {
+    actor "Client (CND)" as CND
+    actor "Employé Banque" as Emp
+    
+    usecase "Ouvrir un compte" as UC_Ouvrir
+    usecase "Demander un Bonus d'ouverture" as UC_Bonus
+    usecase "Gérer des Devises Étrangères" as UC_Devises
+    
+    ' Acteurs reliés au cas principal
+    CND --> UC_Ouvrir
+    Emp --> UC_Ouvrir
+    
+    ' Extensions conditionnelles exigées
+    UC_Bonus .> UC_Ouvrir : <<extend>>
+    UC_Devises .> UC_Ouvrir : <<extend>>
+}
+
+' ==========================================
+' DIAGRAMME DE SÉQUENCE 1 : Aérien
+' ==========================================
+package "Séquence : Acheter Billet" {
+    actor Voyageur
+    participant "Système Réservation" as SysRes
+    participant "Passerelle Bancaire" as Banque
+    
+    Voyageur -> SysRes : rechercherVol(depart, arrivee, date)
+    activate SysRes
+    SysRes --> Voyageur : listeVolsDisponibles
+    deactivate SysRes
+    
+    Voyageur -> SysRes : selectionnerVol(idVol)
+    activate SysRes
+    SysRes --> Voyageur : demanderPaiement(montant)
+    
+    Voyageur -> SysRes : effectuerPaiement(infosCB)
+    SysRes -> Banque : validerTransaction(montant, infosCB)
+    activate Banque
+    Banque --> SysRes : transactionOK
+    deactivate Banque
+    
+    SysRes --> Voyageur : confirmationBillet(numBillet)
+    deactivate SysRes
+}
+
+' ==========================================
+' DIAGRAMME DE SÉQUENCE 2 : Aérien / RH
+' ==========================================
+package "Séquence : Suivi Licence Pilote" {
+    actor Pilote
+    participant "Système RH" as RH
+    
+    Pilote -> RH : consulterStatutLicence()
+    activate RH
+    RH --> Pilote : afficherDetails(dateExpiration, validite)
+    deactivate RH
+    
+    alt Licence proche expiration
+        Pilote -> RH : demanderRenouvellement()
+        activate RH
+        RH --> Pilote : formulaireRenouvellementFourni
+        deactivate RH
+    else Licence valide
+        RH --> Pilote : aucuneActionRequise
+    end
+}
+
+@enduml

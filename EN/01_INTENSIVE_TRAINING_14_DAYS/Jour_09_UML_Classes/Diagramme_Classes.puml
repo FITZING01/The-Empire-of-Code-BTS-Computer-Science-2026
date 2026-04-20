@@ -1,0 +1,58 @@
+@startuml
+title Class Diagram: Online Library (Sprint 19.5)
+
+' ==========================================
+' CLASS DEFINITIONS
+' ==========================================
+
+class Subscriber {
+    - subNum : int
+    - lastName : String
+    - firstName : String
+    - membershipDate : Date
+    + register()
+    + borrowBook(book: Book)
+    + payFine(amount: double)
+}
+
+class Book {
+    - isbn : String
+    - title : String
+    - author : String
+    - pubYear : int
+    - isAvailable : boolean
+    + checkAvailability() : boolean
+    + markUnavailable()
+}
+
+class Loan {
+    - loanId : int
+    - loanDate : Date
+    - dueDate : Date
+    - returnDate : Date
+    - isLate : boolean
+    + calculateFine() : double
+}
+
+class Fine {
+    - fineId : int
+    - amount : double
+    - isPaid : boolean
+    - reason : String
+    + settle()
+}
+
+' ==========================================
+' RELATIONSHIPS AND CARDINALITIES
+' ==========================================
+
+Subscriber "1" -- "*" Loan : makes >
+Book "1" -- "*" Loan : concerns >
+Loan "1" -- "0..1" Fine : generates >
+
+note right of Loan
+  A fine is generated only
+  if returnDate > dueDate
+end note
+
+@enduml
